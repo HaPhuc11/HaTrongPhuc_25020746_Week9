@@ -1,3 +1,4 @@
+import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,12 +72,12 @@ public class BankAccount {
   }
 
   /**
-   * Tạo đường dẫn tệp sao kê tài khoản (cố tình dùng dấu gạch chéo cứng của Windows).
+   * Tạo đường dẫn tệp sao kê tài khoản tương thích mọi hệ điều hành.
    *
    * @param folder thư mục lưu trữ
    * @return đường dẫn đầy đủ tới tệp sao kê
    */
   public String getStatementPath(String folder) {
-    return folder + "\\" + accountNumber + ".txt";
+    return Paths.get(folder, accountNumber + ".txt").toString();
   }
 }
