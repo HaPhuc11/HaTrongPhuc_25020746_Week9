@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankAccount.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BankSystemCoverage</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">BankAccount.java</span></div><h1>BankAccount.java</h1><pre class="source lang-java linenums">import java.nio.file.Paths;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Đại diện cho một tài khoản ngân hàng với các thao tác nạp và rút tiền.
+ */
+public class BankAccount {
+
+<span class="fc" id="L10">  private static final Logger logger = LoggerFactory.getLogger(BankAccount.class);</span>
+  private static final double MIN_TRANSACTION_AMOUNT = 0.0;
+
+  private final String accountNumber;
+  private double balance;
+
+  /**
+   * Khởi tạo tài khoản ngân hàng mới.
+   *
+   * @param accountNumber  số tài khoản định danh
+   * @param initialBalance số dư ban đầu
+   */
+<span class="fc" id="L22">  public BankAccount(String accountNumber, double initialBalance) {</span>
+<span class="fc" id="L23">    this.accountNumber = accountNumber;</span>
+<span class="fc" id="L24">    this.balance = initialBalance;</span>
+<span class="fc" id="L25">    logger.debug(&quot;Tao tai khoan {} voi so du ban dau: {}&quot;, accountNumber, initialBalance);</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * Thực hiện nạp tiền vào tài khoản.
+   *
+   * @param amount số tiền cần nạp
+   */
+  public void deposit(double amount) {
+<span class="fc" id="L34">    logger.info(&quot;Yeu cau nap tien: Tai khoan={}, so tien={}&quot;, accountNumber, amount);</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    if (amount &lt;= MIN_TRANSACTION_AMOUNT) {</span>
+<span class="nc" id="L36">      logger.warn(&quot;Tu choi nap tien - So tien k hop le: Tai khoan={}, So tien={}&quot;,</span>
+<span class="nc" id="L37">          accountNumber, amount);</span>
+<span class="nc" id="L38">      throw new IllegalArgumentException(&quot;So tien nap phai lon hon 0&quot;);</span>
+    }
+<span class="fc" id="L40">    balance += amount;</span>
+<span class="fc" id="L41">    logger.info(&quot;Nap thanh cong: Tai khoan={}, So du moi={}&quot;, accountNumber, balance);</span>
+<span class="fc" id="L42">  }</span>
+
+  /**
+   * Thực hiện rút tiền từ tài khoản.
+   *
+   * @param amount số tiền cần rút
+   */
+  public void withdraw(double amount) {
+<span class="fc" id="L50">    logger.info(&quot;Yeu cau rut tien: tai khoan={}, So tien={}&quot;, accountNumber, amount);</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">    if (amount &lt;= MIN_TRANSACTION_AMOUNT) {</span>
+<span class="nc" id="L52">      logger.warn(&quot;Tu choi rut tien - So tien k hop le: Tai khoan={}, So tien={}&quot;,</span>
+<span class="nc" id="L53">          accountNumber, amount);</span>
+<span class="nc" id="L54">      throw new IllegalArgumentException(&quot;So tien rut phai lon hon 0&quot;);</span>
+    }
+<span class="fc bfc" id="L56" title="All 2 branches covered.">    if (amount &gt; balance) {</span>
+<span class="fc" id="L57">      logger.warn(&quot;Tu choi rut tien - So du k du: tai khoan={}, Yeu cau={}, Hien co={}&quot;,</span>
+<span class="fc" id="L58">          accountNumber, amount, balance);</span>
+<span class="fc" id="L59">      throw new IllegalStateException(&quot;So du k du&quot;);</span>
+    }
+<span class="fc" id="L61">    balance -= amount;</span>
+<span class="fc" id="L62">    logger.info(&quot;Rut tien thanh cong: Tai khoan={}, So tien rut={}, So du moi={}&quot;,</span>
+<span class="fc" id="L63">        accountNumber, amount, balance);</span>
+<span class="fc" id="L64">  }</span>
+
+  public double getBalance() {
+<span class="fc" id="L67">    return balance;</span>
+  }
+
+  public String getAccountNumber() {
+<span class="fc" id="L71">    return accountNumber;</span>
+  }
+
+  /**
+   * Tạo đường dẫn tệp sao kê tài khoản tương thích mọi hệ điều hành.
+   *
+   * @param folder thư mục lưu trữ
+   * @return đường dẫn đầy đủ tới tệp sao kê
+   */
+  public String getStatementPath(String folder) {
+<span class="fc" id="L81">    return Paths.get(folder, accountNumber + &quot;.txt&quot;).toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
