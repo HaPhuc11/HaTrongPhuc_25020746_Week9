@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Maven Matrix
 
 on:
   push:
@@ -8,7 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout source code
@@ -22,11 +27,11 @@ jobs:
           cache: maven
 
       - name: Build, Test and Package with Maven
-        working-directory: ./Bai03
+        working-directory: ./Bai04
         run: mvn -B package
 
       - name: Upload built JAR artifact
         uses: actions/upload-artifact@v4
         with:
-          name: banksystem-jar
-          path: Bai03/target/*.jar
+          name: banksystem-jar-${{ matrix.os }}
+          path: Bai04/target/*.jar
