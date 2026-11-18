@@ -1,4 +1,4 @@
-name: Java CI with Maven Caching
+name: Automated PR Code Review
 
 on:
   push:
@@ -6,8 +6,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
 jobs:
-  build:
+  review-and-test:
+    name: Checkstyle & Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +27,15 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build and Verify with Maven
-        working-directory: ./Bai06
+      - name: Run Checkstyle, Tests and Coverage
+        working-directory: ./Bai07
         run: mvn -B verify
+
+      - name: Run Checkstyle Inline Review
+        if: always()
+        uses: dbelyaev/action-checkstyle@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          checkstyle_report_path: Bai07/target/checkstyle-result.xml
+          reporter: github-pr-review
+          fail_on_error: true
