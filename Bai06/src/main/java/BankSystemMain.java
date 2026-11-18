@@ -1,3 +1,4 @@
+// Trigger second CI run to verify Maven cache
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
