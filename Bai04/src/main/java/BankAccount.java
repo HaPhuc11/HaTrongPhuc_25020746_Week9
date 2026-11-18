@@ -70,12 +70,13 @@ public class BankAccount {
     return accountNumber;
   }
 
-/**
- * Tạo đường dẫn tệp sao kê tài khoản (cố tình dùng dấu gạch chéo cứng của Windows).
- *
- * @param folder thư mục lưu trữ
- * @return đường dẫn đầy đủ tới tệp sao kê
- */
-public String getStatementPath(String folder) {
-  return folder + "\\" + accountNumber + ".txt";
+  /**
+   * Tạo đường dẫn tệp sao kê tài khoản (cố tình dùng dấu gạch chéo cứng của Windows).
+   *
+   * @param folder thư mục lưu trữ
+   * @return đường dẫn đầy đủ tới tệp sao kê
+   */
+  public String getStatementPath(String folder) {
+    return folder + "\\" + accountNumber + ".txt";
+  }
 }
