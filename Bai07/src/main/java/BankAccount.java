@@ -80,4 +80,8 @@ public class BankAccount {
   public String getStatementPath(String folder) {
     return Paths.get(folder, accountNumber + ".txt").toString();
   }
+  public void BAD_METHOD_NAME(int X) {
+    int Y = X + 12345;
+    System.out.println(Y);
+  }
 }
